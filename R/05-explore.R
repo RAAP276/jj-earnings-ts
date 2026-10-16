@@ -134,18 +134,3 @@ plot_quarter_boxplot <- function(series) {
                   title = "Distribution by quarter") +
     ggplot2::theme_minimal(base_size = 11)
 }
-
-
-#' ACF and PACF display via forecast::ggtsdisplay
-#'
-#' Wrapper that returns the composed ggplot object produced by
-#' [forecast::ggtsdisplay()]. Saving to disk requires `ggplot2::ggsave()`
-#' with `plot =` explicitly (the object is a composed `patchwork`).
-#'
-#' @param series A `ts` object.
-#' @param ... Passed through to [forecast::ggtsdisplay()].
-#' @return A `patchwork`/`ggplot` object.
-#' @export
-plot_acf_pacf <- function(series, ...) {
-  forecast::ggtsdisplay(series, ...)
-}
