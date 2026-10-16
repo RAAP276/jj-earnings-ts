@@ -98,8 +98,12 @@ ggplot2::ggsave(
 
 # ACF/PACF: ggtsdisplay returns a composed plot that needs png() + print()
 png(file.path(output_dir, "acf_pacf.png"),
-    width = 900, height = 900, res = 120)
-print(plot_acf_pacf(log_series))
+    width = 1000, height = 1500, res = 120)
+old_par <- par(mfrow = c(3, 1))
+plot.ts(log_series, main = "Series", ylab = "log(Earnings)")
+stats::acf(log_series, main = "ACF", lag.max = 30)
+stats::pacf(log_series, main = "PACF", lag.max = 30)
+par(old_par)
 dev.off()
 
 # ---- 6. Stationarity tests ------------------------------------------------
