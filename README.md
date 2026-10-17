@@ -3,6 +3,8 @@
 A reproducible time series analysis of the Johnson & Johnson quarterly
 earnings per share series (1960-1980), using R, Quarto, and LaTeX.
 
+Note: Refactor of a prior exercise, extended with modular code, Quarto reporting, renv reproducibility, stationarity testing, and out-of-sample validation.
+
 ---
 
 ## Overview
