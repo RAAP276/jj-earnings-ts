@@ -1,0 +1,935 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  english,
+  a4paper,
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,shorthands=off]{babel}
+\else
+\usepackage[bidi=default,shorthands=off]{babel}
+\fi
+\ifLuaTeX
+  \usepackage{selnolig} % disable illegal ligatures
+\fi
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Johnson \& Johnson Time Series Analysis},
+  pdfauthor={Rubén A.},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Johnson \& Johnson Time Series Analysis}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{A reproducible analysis with R and Quarto}
+\author{Rubén A.}
+\date{2026-10-16}
+\begin{document}
+\maketitle
+
+
+\section{Introduction}\label{introduction}
+
+The Johnson \& Johnson quarterly earnings per share series (1960--1980)
+is a canonical example in the time series literature, appearing in
+Shumway and Stoffer's \emph{Time Series Analysis and Its Applications}
+as the first worked example of regression with seasonal dummies.
+
+The series consists of 84 quarterly observations of earnings per share,
+starting in 1960-Q1 and ending in 1980-Q4. It exhibits a strong upward
+trend, clear quarterly seasonality, and cyclic structure at
+business-cycle frequencies. These features make it an excellent case
+study for comparing classical regression-based approaches with modern
+time series models.
+
+\subsection{Objective}\label{objective}
+
+This report provides a reproducible analysis of the J\&J series using
+three complementary approaches:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Regression baseline.} A log-linear model with a centered time
+  trend and quarterly dummy variables, following the original exercise.
+\item
+  \textbf{Exploratory decomposition.} STL decomposition, seasonal plots,
+  and quarterly boxplots to characterize the structure of the series.
+\item
+  \textbf{Alternative models and forecasting.} SARIMA and ETS models,
+  validated via holdout and rolling cross-validation.
+\end{enumerate}
+
+The analysis is fully reproducible: all figures, tables, and numerical
+results are generated from code in this repository.
+
+\section{Data}\label{data}
+
+The dataset used in this report is the \texttt{JohnsonJohnson} series
+shipped with base R. It contains 84 quarterly observations, starting in
+1960-Q1 and ending in 1980-Q4.
+
+Earnings per share (EPS) is a standard financial metric computed by
+dividing a company's net income by the number of outstanding shares. It
+measures how much profit the company generated for each share of stock
+during a given period. For Johnson \& Johnson, EPS is reported
+quarterly, and this dataset tracks it from the first quarter of 1960
+through the fourth quarter of 1980.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{report_files/figure-pdf/fig-original-1.pdf}}
+
+}
+
+\caption{\label{fig-original}Johnson \& Johnson quarterly earnings per
+share, 1960--1980.}
+
+\end{figure}%
+
+As shown in Figure~\ref{fig-original}, the series displays two features
+that shape the modeling strategy.
+
+First, an upward trend: earnings per share roughly triple over the
+twenty-one years.
+
+Second, a clear seasonal oscillation: within each year, earnings rise
+from the first to the third quarter and drop in the fourth. This pattern
+repeats with remarkable consistency across the sample.
+
+The variance also appears to grow with the level. Early years fluctuate
+within a narrow band, while later years show much larger swings. This
+pattern, called heteroscedasticity, motivates the log transformation
+used throughout the analysis.
+
+All subsequent work is performed on the log series, \(x_t = \log(y_t)\),
+where \(y_t\) denotes the original earnings per share.
+
+\section{Exploratory analysis}\label{exploratory-analysis}
+
+Before fitting any model, we inspect the structure of the series. We use
+the STL decomposition to separate trend and seasonality, quarterly
+boxplots to check whether the seasonal pattern is stable across years,
+and the sample ACF and PACF to guide model selection.
+
+\subsection{STL decomposition}\label{stl-decomposition}
+
+STL (Seasonal-Trend decomposition using LOESS) splits a series into
+three additive components: a smooth trend, a repeating seasonal pattern,
+and a remainder that captures everything else. It is a data-driven
+alternative to fitting a regression first.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/stl.png}}
+
+}
+
+\caption{\label{fig-stl}STL decomposition of log earnings. Panels show
+observed, trend, seasonal, and remainder components.}
+
+\end{figure}%
+
+Figure~\ref{fig-stl} shows four panels. The observed panel reproduces
+the raw series, growing across the year and dropping in Q4, following
+the same pattern seen in the boxplots. The trend panel is a smoothed
+version of the series, with amplitude much smaller than the raw data.
+The seasonal component is approximately periodic, oscillating between
+about plus and minus one-tenth of a log unit. The remainder stays within
+a small band around zero, roughly two-tenths of a unit on the log scale,
+indicating that trend and seasonality capture most of the variation in
+the series.
+
+\subsection{Seasonal pattern}\label{seasonal-pattern}
+
+A seasonal plot rearranges the series into a grid with one row per year
+and one column per quarter. Each line traces the path of a single year
+across the four quarters, and the color of the line encodes the year,
+from grey (1960) to red (1980).
+
+This layout makes the within-year pattern visible at a glance. If
+earnings follow a stable seasonal shape, all lines rise and fall the
+same way, and only their vertical position changes from year to year.
+Deviations from the common shape stand out immediately.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/seasonal.png}}
+
+}
+
+\caption{\label{fig-seasonal}Seasonal plot of log earnings. Each line
+represents one year; color encodes year from grey (1960) to red (1980).}
+
+\end{figure}%
+
+Figure~\ref{fig-seasonal} confirms a consistent within-year pattern:
+earnings grow from Q1 to Q3 and decline in Q4. The color gradient shows
+that later years (red) are systematically above earlier years (grey),
+reflecting the upward trend. No year deviates visibly from this shape,
+which justifies a fixed seasonal specification.
+
+\subsection{Quarterly distribution}\label{quarterly-distribution}
+
+A boxplot summarizes the distribution of a set of values in a compact
+form. The central box spans the interquartile range, from the 25th to
+the 75th percentile. The thick horizontal line inside the box marks the
+median. The whiskers extend to the most extreme values within 1.5 times
+the interquartile range, and points beyond them are outliers.
+
+Here we group the 84 log earnings values by quarter. Each of the four
+boxplots therefore summarizes 21 observations, one per year.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/quarter_boxplot.png}}
+
+}
+
+\caption{\label{fig-boxplot}Distribution of log earnings by quarter
+across the 21 years.}
+
+\end{figure}%
+
+Figure~\ref{fig-boxplot} shows that the median increases from Q1 to Q3
+and Q4 presents larger dispersion. Q3 exhibits the narrowest
+interquartile range, indicating the least dispersion of log earnings in
+that quarter. If we rearrange the quarters to place Q4 before Q1, a
+pattern emerges that is easy to miss in the standard order: Q4 is
+systematically above Q1, Q1 is the absolute minimum, and Q3 is the
+absolute maximum. The within-year trajectory is therefore not monotonic
+but cyclical, with a pronounced drop between Q3 and Q4 followed by a
+further drop into Q1, and then a recovery through Q2 and Q3.
+
+\subsection{ACF and PACF}\label{acf-and-pacf}
+
+The sample autocorrelation function (ACF) measures the linear
+correlation between the series and its own lagged values. The partial
+autocorrelation function (PACF) does the same but removes the effect of
+intermediate lags. Together they are the standard diagnostic for
+choosing the orders of an ARIMA model.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/acf_pacf.png}}
+
+}
+
+\caption{\label{fig-acf}Time series (top), sample ACF (middle), and
+sample PACF (bottom) of log earnings.}
+
+\end{figure}%
+
+Figure~\ref{fig-acf} shows that the ACF decays very slowly, which is the
+classic signature of a non-stationary series. The PACF, by contrast, has
+a single significant spike at lag 1. Beyond lag 1, it shows local minima
+at lags 5, 9, and 13, all of which stay within the confidence band. The
+isolated spike at lag 1 suggests a first-order autoregressive structure,
+while the regular spacing of the local minima hints at a seasonal
+component with a shift of one quarter. The slow decay of the ACF and the
+shifted minima together motivate the seasonal differencing used in the
+modeling section.
+
+\section{Regression baseline}\label{regression-baseline}
+
+The original exercise proposes a log-linear model with a centered time
+trend and quarterly dummy variables:
+
+\[
+x_t = \beta \, t + \alpha_1 Q_1(t) + \alpha_2 Q_2(t) + \alpha_3 Q_3(t) + \alpha_4 Q_4(t) + \omega_t
+\]
+
+where \(x_t = \log(y_t)\), \(t\) is the time index centered at 1970,
+\(Q_i(t) = 1\) if observation \(t\) belongs to quarter \(i\) and \(0\)
+otherwise, and \(\omega_t\) is a Gaussian white noise sequence. The
+model has no separate intercept because the four quarterly dummies span
+the constant.
+
+The parameters have a direct interpretation. The trend coefficient
+\(\beta\) captures the average quarterly growth rate of log earnings
+across the entire sample. Each \(\alpha_i\) represents the baseline
+level of quarter \(i\) after removing the trend. The seasonal amplitude
+is encoded in the differences \(\alpha_i - \alpha_j\) between quarters.
+
+\subsection{Coefficient estimates}\label{coefficient-estimates}
+
+The table below reports the estimated coefficients, their standard
+errors, the test statistic, and the associated p-value for the
+no-intercept specification. Each coefficient is tested against zero: a
+small p-value indicates that the coefficient is statistically different
+from zero.
+
+{
+
+\begin{longtable}[]{@{}lrrrr@{}}
+
+\caption{\label{tbl-coef}Coefficient estimates for the no-intercept
+regression.}
+
+\tabularnewline
+
+\toprule\noalign{}
+term & estimate & std.error & statistic & p.value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+trend & 0.1672 & 0.0023 & 73.9990 & 0 \\
+quarterQ1 & 1.0528 & 0.0274 & 38.4804 & 0 \\
+quarterQ2 & 1.0809 & 0.0274 & 39.4999 & 0 \\
+quarterQ3 & 1.1510 & 0.0274 & 42.0350 & 0 \\
+quarterQ4 & 0.8823 & 0.0274 & 32.1858 & 0 \\
+
+\end{longtable}
+
+}
+
+Table~\ref{tbl-coef} shows the estimated coefficients. The trend
+estimate \(\hat{\beta}\) is positive and highly significant, confirming
+the upward movement visible in the series. All four quarterly
+coefficients are also significant at conventional levels. They differ
+from each other, and their spread reflects the amplitude of the seasonal
+pattern identified in the exploratory analysis.
+
+\subsection{Observed vs fitted}\label{observed-vs-fitted}
+
+Overlaying fitted values on the observed series is the quickest way to
+judge how well a model tracks the data. Two failure modes are common: a
+model that captures the trend but misses the seasonality, or one that
+captures the seasonality but misses long-run movements.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/observed_vs_fitted.png}}
+
+}
+
+\caption{\label{fig-observed}Observed log earnings (black) and fitted
+values from the no-intercept regression (red).}
+
+\end{figure}%
+
+Figure~\ref{fig-observed} shows that the regression captures the overall
+upward trend and the quarterly pattern, but the fitted values form a
+smooth quasi-periodic curve that misses the year-to-year variation in
+the observed series. This is expected: a regression with five parameters
+cannot capture business-cycle dynamics. The residuals, the difference
+between the two curves, are examined next.
+
+\subsection{Residual diagnostics}\label{residual-diagnostics}
+
+Residuals are the differences between observed and fitted values. If the
+model captures all systematic structure, the residuals should behave
+like white noise: no trend, no seasonal pattern, no autocorrelation.
+Non-random residuals signal that something is missing from the
+specification.
+
+\begin{figure}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{output/residuals.png}}
+
+}
+
+\caption{\label{fig-residuals}Residuals from the no-intercept
+regression.}
+
+\end{figure}%
+
+The residuals in Figure~\ref{fig-residuals} are not white noise. They
+display a low-frequency oscillation with a clear structure: a sustained
+negative phase through the 1960s, a sharp positive peak centered around
+1972, and a return to negative values after 1976. The peak is robust
+across moving-average windows of different lengths, which confirms it is
+a genuine feature of the residuals rather than an artifact of smoothing.
+The oscillation is not strictly periodic and its duration is not fixed,
+which is characteristic of economic cycles rather than of a mechanical
+seasonal pattern. The regression specification, with only five
+parameters and a rigid trend, cannot represent this structure,
+motivating the use of autoregressive models such as SARIMA in the next
+section.
+
+\section{Stationarity}\label{stationarity}
+
+Most time series models, including SARIMA and ETS, assume the series is
+stationary after appropriate transformations. A series is weakly
+stationary if its mean, variance, and autocovariance structure do not
+change over time. We test this assumption with two complementary
+stationarity tests, and we also apply the Ljung-Box test to check
+whether the series exhibits serial dependence.
+
+\subsection{ADF and KPSS}\label{adf-and-kpss}
+
+The Augmented Dickey-Fuller (ADF) test has the null hypothesis that the
+series contains a unit root, meaning it is non-stationary. The
+Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test has the opposite null:
+that the series is stationary. Using both tests together reduces the
+risk of a misleading conclusion.
+
+{
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2073}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0610}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1220}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0976}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3293}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1829}}@{}}
+
+\caption{\label{tbl-stationarity}Stationarity tests on the log series
+and its first difference.}
+
+\tabularnewline
+
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+series
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+test
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+statistic
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p\_value
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+null\_hypothesis
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+conclusion
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+log series & ADF & -1.1543 & 0.9087 & Unit root (non-stationary) &
+Non-stationary \\
+log series & KPSS & 2.1867 & 0.0100 & Level-stationary &
+Non-stationary \\
+first difference & ADF & -4.5649 & 0.0100 & Unit root (non-stationary) &
+Stationary \\
+first difference & KPSS & 0.1720 & 0.1000 & Level-stationary &
+Stationary \\
+
+\end{longtable}
+
+}
+
+Table~\ref{tbl-stationarity} shows that both tests agree on the log
+series: ADF fails to reject the unit-root null, and KPSS rejects
+stationarity. On the first difference, both tests agree in the opposite
+direction. The conclusion is that the log series is non-stationary and a
+single regular difference is enough to make it stationary.
+
+\subsection{Ljung-Box test}\label{ljung-box-test}
+
+The Ljung-Box test checks whether a series exhibits significant
+autocorrelation up to a given lag. Applied to the log series, it
+confirms the visual impression from the ACF.
+
+{
+
+\begin{longtable}[]{@{}rrr@{}}
+
+\caption{\label{tbl-ljungbox}Ljung-Box test on the log series, lag =
+10.}
+
+\tabularnewline
+
+\toprule\noalign{}
+statistic & df & p\_value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+613.0387 & 10 & 0 \\
+
+\end{longtable}
+
+}
+
+The Ljung-Box test checks whether a series shows autocorrelation up to a
+given lag. Its null hypothesis is that the values are independent over
+time. The test statistic of 613 with 10 degrees of freedom produces a
+p-value below any conventional threshold. The null is rejected
+decisively: the log series has strong serial dependence, and its values
+are far from independent. This provides one more reason to move beyond a
+regression with independent errors toward a model that explicitly
+captures the autocorrelation, such as SARIMA.
+
+\section{Alternative models}\label{alternative-models}
+
+The regression baseline captures trend and seasonality but leaves a
+cyclic residual structure unexplained. We now fit two families of models
+specifically designed to handle autocorrelation: SARIMA and ETS.
+
+\subsection{Model comparison}\label{model-comparison}
+
+How should we choose between SARIMA and ETS? Both model the same series,
+but they represent different assumptions about the underlying structure.
+Information criteria provide a principled comparison. AIC and BIC trade
+off goodness of fit against model complexity: lower values indicate a
+better balance. They are not directly comparable across different
+datasets, but they are meaningful when comparing models fitted to the
+same data.
+
+{
+
+\begin{longtable}[]{@{}lrrr@{}}
+
+\caption{\label{tbl-model-comparison}Information criteria for the SARIMA
+and ETS fits on the full log series.}
+
+\tabularnewline
+
+\toprule\noalign{}
+model & log\_lik & aic & bic \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SARIMA & 82.47 & -154.95 & -143.04 \\
+ETS & 19.28 & -20.56 & 1.32 \\
+
+\end{longtable}
+
+}
+
+Table~\ref{tbl-model-comparison} compares the two models using
+log-likelihood, AIC, and BIC. The SARIMA model has an AIC of -154.95,
+about 134.4 points lower than ETS. The BIC difference follows the same
+direction and is even larger in magnitude. All three criteria therefore
+point to the SARIMA model as the better trade-off between fit and
+complexity.
+
+\subsection{SARIMA specification}\label{sarima-specification}
+
+SARIMA extends ARIMA to handle seasonal structure. Its full
+specification is \(\text{ARIMA}(p, d, q)(P, D, Q)[s]\), where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(p, d, q\) are the regular autoregressive, differencing, and
+  moving-average orders.
+\item
+  \(P, D, Q\) are the seasonal counterparts.
+\item
+  \(s\) is the seasonal period, equal to 4 for quarterly data.
+\end{itemize}
+
+We fit the model automatically with \texttt{forecast::auto.arima}, which
+searches over a grid of orders and selects the one minimizing AICc.
+
+The search selects a SARIMA(2,0,0)(1,1,0){[}4{]} with drift. The two
+regular autoregressive terms capture short-run dependence between
+consecutive quarters. The seasonal term at lag 4 captures the annual
+cycle. The drift term reflects the average quarterly growth of log
+earnings. Because the seasonal differencing order is \(D = 1\), the
+model effectively works with year-over-year changes, which removes the
+seasonal non-stationarity detected earlier.
+
+\subsection{ETS specification}\label{ets-specification}
+
+ETS stands for \emph{Error, Trend, Seasonal}. Each component can take
+different forms: error can be additive (A) or multiplicative (M); trend
+can be none (N), additive (A), or damped (Ad); seasonality can be none
+(N), additive (A), or multiplicative (M). The combination defines a
+family of exponential smoothing models.
+
+We fit the model automatically with \texttt{forecast::ets}, which
+evaluates all feasible combinations and selects the one minimizing AICc.
+
+The selected model is ETS(A,A,A), also known as Holt-Winters additive.
+It decomposes the series into level, trend, and seasonality, each
+updated exponentially with weights \(\alpha\), \(\beta\), and
+\(\gamma\). The estimated seasonal smoothing parameter is 0.54,
+indicating that the seasonal component adapts substantially each year.
+
+\section{Forecast validation}\label{forecast-validation}
+
+Comparing models on the same data used for fitting can be misleading. We
+evaluate out-of-sample performance with two complementary strategies: a
+single holdout split and rolling cross-validation.
+
+\subsection{Holdout validation}\label{holdout-validation}
+
+The series is split into a training set covering 1960 to 1975 (64
+observations) and a test set covering 1976 to 1980 (20 observations).
+Both models are refit on the training set and evaluated on the test set.
+
+Three metrics summarize the forecast errors:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{RMSE} (Root Mean Squared Error) is the square root of the
+  average squared error. It penalizes large errors more heavily than
+  small ones and is on the same scale as the log earnings.
+\item
+  \textbf{MAE} (Mean Absolute Error) is the average absolute error. It
+  is less sensitive to outliers than RMSE.
+\item
+  \textbf{MAPE} (Mean Absolute Percentage Error) expresses the error as
+  a percentage of the observed value. It is useful for comparing across
+  scales, but it is unstable when the true value is close to zero.
+\end{itemize}
+
+{
+
+\begin{longtable}[]{@{}lrrr@{}}
+
+\caption{\label{tbl-holdout}Holdout accuracy for SARIMA and ETS on the
+1976--1980 test set.}
+
+\tabularnewline
+
+\toprule\noalign{}
+model & RMSE & MAE & MAPE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SARIMA & 0.0833 & 0.0712 & 2.9650 \\
+ETS & 0.2181 & 0.1815 & 7.1837 \\
+
+\end{longtable}
+
+}
+
+Table~\ref{tbl-holdout} shows that SARIMA achieves a test RMSE of
+0.0833, a MAE of 0.0712, and a MAPE of 2.96 percent. ETS, in contrast,
+achieves an RMSE of 0.2181, a MAE of 0.1815, and a MAPE of 7.18 percent.
+The difference is substantial: SARIMA is roughly 2.6 times more accurate
+on the test set by RMSE.
+
+\subsection{Rolling cross-validation}\label{rolling-cross-validation}
+
+Rolling cross-validation fits the model at each time point and predicts
+one step ahead, then averages the squared errors across all folds. This
+uses every observation as a potential test point.
+
+{
+
+\begin{longtable}[]{@{}lr@{}}
+
+\caption{\label{tbl-tscv}One-step-ahead rolling cross-validation RMSE.}
+
+\tabularnewline
+
+\toprule\noalign{}
+model & rmse \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SARIMA & 0.1300 \\
+ETS & 0.1389 \\
+
+\end{longtable}
+
+}
+
+Table~\ref{tbl-tscv} shows the same ranking: SARIMA has a lower
+cross-validated RMSE than ETS. Both metrics agree, giving confidence in
+the conclusion.
+
+\section{Discussion}\label{discussion}
+
+Three findings stand out from the analysis.
+
+First, the log transformation and the choice of a single difference are
+well justified by the data. The raw series shows variance growing with
+the level, and the log scale stabilizes it. The STL decomposition then
+reveals that trend and seasonality account for most of the variation,
+leaving a remainder with amplitude of roughly ±0.2 on the log scale. The
+ADF and KPSS tests on the differenced series agree that a single regular
+difference suffices to achieve stationarity. This provides a clear
+justification for the \texttt{d\ =\ 1} setting that the modeling section
+assumes.
+
+Second, the regression baseline is useful as an interpretable model but
+insufficient as a complete description of the series. All five
+coefficients are significant, and the fitted values track the trend and
+the quarterly pattern accurately. However, the residuals are not white
+noise: they display a low-frequency oscillation with irregular phases,
+including a sustained negative period through the 1960s, a sharp peak
+around 1972, and a return to negative values after 1976. The
+five-parameter specification cannot represent this structure. This is a
+genuine limitation of the model class, not a numerical artifact.
+
+Third, the SARIMA model outperforms ETS on every metric considered. The
+automatic search selects a SARIMA(2,0,0)(1,1,0){[}4{]} with drift, which
+combines regular autoregressive terms, a seasonal autoregressive term at
+lag 4, and seasonal differencing. The ETS model selects the additive
+Holt-Winters specification, ETS(A,A,A). SARIMA achieves an AIC of about
+134 points lower than ETS, and a test-set RMSE that is roughly 2.6 times
+smaller. The rolling cross-validation confirms the same ranking. The
+most likely explanation is that the regular AR terms in SARIMA capture
+the short-run autocorrelation that the additive ETS specification cannot
+represent, while the seasonal AR term captures the annual cycle.
+
+Two caveats apply to the third finding. First, the seasonal differencing
+order (\texttt{D\ =\ 1}) chosen by \texttt{auto.arima} differs from the
+regular differencing order (\texttt{d\ =\ 1}) suggested by the ADF and
+KPSS tests. Both approaches remove the non-stationarity, but they do so
+through different mechanisms. The AICc criterion preferred the
+seasonal-differencing solution for this series. Second, the holdout RMSE
+and the tsCV RMSE measure different things: the holdout evaluates a
+single model trained on 64 observations and asked to forecast 20 steps
+ahead, while the tsCV fits a new model at every step and predicts one
+step ahead. Both metrics agree on the ranking of the two models, which
+strengthens the conclusion.
+
+\section{Limitations}\label{limitations}
+
+The analysis has several limitations worth noting.
+
+The sample is small: 84 quarterly observations spanning 1960 to 1980.
+With only 21 years of data, the effective sample size for estimating
+seasonal and business-cycle structure is limited. Forecasts beyond 1980
+should not be extrapolated without additional data, since the later
+behavior of the series may reflect economic conditions absent from this
+sample.
+
+The comparison between SARIMA and ETS relies on automatic model
+selection. \texttt{auto.arima} and \texttt{ets} search over candidate
+specifications by AICc, and the selected models are the best within
+their respective families, but not necessarily the best possible models
+for this series. A manual search guided by the ACF and PACF could yield
+a different SARIMA specification. Similarly, the ranking of the two
+families could change under a different loss function.
+
+The SARIMA and ETS models were compared on a single train/test split
+(1960--1975 for training, 1976--1980 for testing), and this split was
+also supplemented by rolling cross-validation. The single split places
+the test period in the last five years of the sample, when the series
+appears to flatten slightly. A different split, or a larger number of
+folds in the cross-validation, could change the magnitude of the
+reported differences, although the direction of the ranking was
+consistent across both evaluations.
+
+The seasonal plot shows no year that deviates strongly from the overall
+shape, but this does not rule out structural breaks at a finer scale. A
+formal breakpoint analysis, such as the Chow test or the Bai--Perron
+procedure, was not performed. If the series contains a structural break,
+the models presented here would fit neither regime well.
+
+Finally, all figures and tables in this report are generated from a
+single pipeline. The pipeline is reproducible, but it assumes that the
+input series is \texttt{datasets::JohnsonJohnson} unchanged. Modifying
+the input or the transformation would require rerunning the analysis and
+updating the interpretation accordingly.
+
+\section{Reproducibility}\label{reproducibility}
+
+All results in this report are generated from code in this repository.
+The analysis is organized into two stages.
+
+The first stage runs the full pipeline: data loading, exploratory
+decomposition, regression fitting, stationarity tests, alternative
+models, and forecast validation. It writes all figures and tables to
+\texttt{output/} and saves the key R objects to
+\texttt{output/results.rds}.
+
+Rscript analysis.R On systems where Rscript is not on the PATH, the same
+command can be run from within an R session opened at the project root:
+source(``analysis.R'') The second stage renders this report from the
+precomputed results. It does not refit any model; it reads
+output/results.rds and produces the final document. quarto render
+report.qmd To regenerate the PDF version with the LaTeX source preserved
+for external editing: quarto render report.qmd --to pdf The LaTeX source
+is written to report.tex alongside the PDF.
+
+Package versions are pinned via renv. To restore the exact environment
+used to produce this report: renv::restore() The R session used to
+compile the report is recorded below. R version: R version 4.4.1
+(2024-06-14 ucrt)
+
+Key package versions:
+
+\begin{verbatim}
+Registered S3 method overwritten by 'quantmod':
+  method            from
+  as.zoo.data.frame zoo 
+\end{verbatim}
+
+forecast : 8.23.0 tseries : 0.10.58 ggplot2 : 3.5.1 broom : 1.0.7 knitr
+: 1.48 dplyr : 1.1.4 tibble : 3.2.1 rlang : 1.1.4 quarto : 1.5.1
+
+
+
+
+\end{document}
